@@ -1,0 +1,41 @@
+﻿<Window x:Class="VittaPayment.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VittaPayment.Client"
+        mc:Ignorable="d"
+        Title="Vitta Payment" Height="600" Width="800">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Заказы">
+                <DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedOrder}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Номер" Binding="{Binding OrderNumber}" />
+                        <DataGridTextColumn Header="Дата" Binding="{Binding OrderDate}" />
+                        <DataGridTextColumn Header="Сумма" Binding="{Binding TotalAmount}" />
+                        <DataGridTextColumn Header="Сумма оплаты" Binding="{Binding PaymentAmount}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Приход денег">
+                <DataGrid ItemsSource="{Binding CashIncomes}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedCashIncome}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Номер" Binding="{Binding IncomeNumber}" />
+                        <DataGridTextColumn Header="Дата" Binding="{Binding IncomeDate}" />
+                        <DataGridTextColumn Header="Сумма" Binding="{Binding Amount}" />
+                        <DataGridTextColumn Header="Остаток" Binding="{Binding Balance}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Платежи">
+                <StackPanel Margin="10">
+                    <ComboBox ItemsSource="{Binding Orders}" DisplayMemberPath="OrderNumber" SelectedItem="{Binding SelectedOrder}" />
+                    <ComboBox ItemsSource="{Binding CashIncomes}" DisplayMemberPath="IncomeNumber" SelectedItem="{Binding SelectedCashIncome}" />
+                    <TextBox Text="{Binding PaymentAmount, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Content="Создать платеж" Command="{Binding CreatePaymentCommand}" />
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
